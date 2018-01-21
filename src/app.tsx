@@ -153,7 +153,7 @@ const Page6 = (updateState: any, weddingPackage: any, day: number) => {
                         <input id="proposedDate" className="form-control" type="date"
                                onChange={e => updateState("proposedDate", e.target.value)}/>
                     </div>
-                    {weddingPackage &&
+                    {weddingPackage && weddingPackage.name &&
                         <div>
                             The date chosen falls into our {weddingPackage.name} in the {weddingPackage.season} on a {weddingPackage.getDayString(day)} and starts at £{weddingPackage.cost}.00
                             <img src="./images/ultimate-castle.jpg"/>
@@ -161,7 +161,7 @@ const Page6 = (updateState: any, weddingPackage: any, day: number) => {
                     }
                 </div>
                 <div className="col">
-                    {weddingPackage &&
+                    {weddingPackage && weddingPackage.name &&
                     <div>
                         Information about the package can go here.
                     </div>
