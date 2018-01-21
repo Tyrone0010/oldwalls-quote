@@ -1,7 +1,7 @@
 var path = require("path");
 var config = {
     /* The entry point of the application. Webpack uses this information to create the dependency tree which is used to bundle the scripts.*/
-    entry: ["./src/App.ts"],
+    entry: ["./src/App.tsx"],
     /* This information is used to give the name of the bundled file and the location of the bundled file. */
     output: {
         path: path.resolve(__dirname, "build"),
