@@ -1,4 +1,4 @@
-export const Package = (packageData: any, date: Date) => {
+export const getPackage = (packageData: any, date: Date) => {
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     let data = [
         {

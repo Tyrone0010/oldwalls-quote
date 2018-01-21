@@ -142,7 +142,14 @@ const Page5 = (updateState: any, customers: Array<ICustomer>) => {
     )
 }
 
-const Page6 = (updateState: any, weddingPackage: any, day: number) => {
+const Page6 = (updateState: any) => {
+    const weddingPackage: any = null;
+    const day: number = null;
+
+    const setPackage = (date: string) => {
+        const chosenPackage = Package.getPackage(null, date)
+    }
+
     return (
         <div >
             <h1>Packages</h1>
@@ -151,9 +158,9 @@ const Page6 = (updateState: any, weddingPackage: any, day: number) => {
                     <div className="form-group">
                         <label htmlFor="proposedDate">Choose Your Date</label>
                         <input id="proposedDate" className="form-control" type="date"
-                               onChange={e => updateState("proposedDate", e.target.value)}/>
+                               onChange={e => setPackage(e.target.value)}/>
                     </div>
-                    {weddingPackage && weddingPackage.name &&
+                    {weddingPackage &&
                         <div>
                             The date chosen falls into our {weddingPackage.name} in the {weddingPackage.season} on a {weddingPackage.getDayString(day)} and starts at £{weddingPackage.cost}.00
                             <img src="./images/ultimate-castle.jpg"/>
@@ -161,7 +168,7 @@ const Page6 = (updateState: any, weddingPackage: any, day: number) => {
                     }
                 </div>
                 <div className="col">
-                    {weddingPackage && weddingPackage.name &&
+                    {weddingPackage &&
                     <div>
                         Information about the package can go here.
                     </div>
