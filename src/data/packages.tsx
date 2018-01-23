@@ -1,4 +1,4 @@
-export const getPackage = (packageData: any, date: Date) => {
+const weddingPackage = (packageData: any, date: Date) => {
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     let data = [
         {
@@ -111,14 +111,21 @@ export const getPackage = (packageData: any, date: Date) => {
         data = packageData
     }
 
-    const getPackage = () => {
-        for(let p = 0; p < data.length; p++){
-            if(data[p].daysAvailable.indexOf(date.getDay()) && data[p].monthsAvailable.indexOf(date.getMonth())){
-                return data[p];
-            }
+    const day = date.getDay();
+    const month = date.getMonth();
+
+    for(let p = 0; p < data.length; p++){
+        // const dataX = data[p];
+        // const daysX = dataX.daysAvailable.indexOf(day);
+        // const monthsX = dataX.monthsAvailable.indexOf(month);
+
+        if(data[p].daysAvailable.indexOf(date.getDay()) >= 0 && data[p].monthsAvailable.indexOf(date.getMonth()) >= 0){
+            return data[p];
         }
     }
 
-    return getPackage();
+    return null;
 
 }
+
+export {weddingPackage}

@@ -8,11 +8,15 @@ var config = {
         publicPath: "/build/",
         filename: "bundle.js"
     },
+    devtool: "inline-sourcemap",
     /* The extensions which will be imported or required in the application scripts. */
     resolve: {
         extensions: [".ts", ".tsx", ".js"]
     },
     module: {
+        // rules: [
+        //     { test: /\.js$/, loader: 'source-map-loader', enforce: 'pre' }
+        // ],
         /* Define the loaders to be used. Regex will test the type of files on which the loader is to be applied. The excluded files are also mentioned. Loaders are used mainly to preprocess/transpile the file when imported or required in the scripts before bundling. */
         loaders: [{
             test: /\.tsx?$/,
