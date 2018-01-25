@@ -1,23 +1,31 @@
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
-import * as Package from './data/packages';
+import Moment from 'react-moment';
+import {weddingPackage} from './data/packages';
+import {weddingMenu} from './data/menus';
 
-interface ICustomer {
+interface IStaffDetailProps {
     firstName: string,
-    surname: string
+    surname: string,
+    updateState: any
 }
 
-const Page1 = (updateState: any, meetingDate: string, selectedItem: number) => {
+const StaffDetail = (props: any) => {
+
+    const update = (name: string, value: string) => {
+        props.updateState(name, value);
+    };
+
     return (
         <div>
             <h1>Staff Detail</h1>
             <div className="form-group">
                 <label htmlFor="meetingDate">Meeting Date</label>
-                <input id="meetingDate" defaultValue={meetingDate} className="form-control" type="date" onChange={e => updateState("meetingDate", e.target.value)} />
+                <input id="meetingDate" defaultValue={props.meetingDate} className="form-control" type="date" onChange={e => update("meetingDate", e.target.value)} />
             </div>
             <div className="form-group">
                 <label htmlFor="staffMember">Staff Member</label>
-                <select id="staffMember" className="form-control" onChange={e => updateState("staffMember", e.target.value)}>
+                <select id="staffMember" className="form-control" onChange={e => update("staffMember", e.target.value)}>
                     <option>Nigel Hole</option>
                     <option>Staff 1</option>
                     <option>Staff 2</option>
@@ -29,7 +37,7 @@ const Page1 = (updateState: any, meetingDate: string, selectedItem: number) => {
     )
 }
 
-const Page2 = (updateState: any, customers: Array<ICustomer>) => {
+const Page2 = (updateState: any) => {
     return (
         <div>
             <h1>Customer(s)</h1>
@@ -48,7 +56,7 @@ const Page2 = (updateState: any, customers: Array<ICustomer>) => {
     )
 }
 
-const Page3 = (updateState: any, customers: Array<ICustomer>) => {
+const Page3 = (updateState: any) => {
     return (
         <div>
             <h1>Contact Details</h1>
@@ -96,7 +104,7 @@ const Page3 = (updateState: any, customers: Array<ICustomer>) => {
     )
 }
 
-const Page4 = (updateState: any, customers: Array<ICustomer>) => {
+const Page4 = (updateState: any) => {
     return (
         <div>
             <h1>Feedback</h1>
@@ -114,7 +122,7 @@ const Page4 = (updateState: any, customers: Array<ICustomer>) => {
     )
 }
 
-const Page5 = (updateState: any, customers: Array<ICustomer>) => {
+const Page5 = (updateState: any) => {
     return (
         <div>
             <h1>Guest Numbers</h1>
@@ -143,11 +151,11 @@ const Page5 = (updateState: any, customers: Array<ICustomer>) => {
 }
 
 const Page6 = (updateState: any) => {
-    const weddingPackage: any = null;
+    let chosenPackage: any = null;
     const day: number = null;
 
     const setPackage = (date: string) => {
-        const chosenPackage = Package.getPackage(null, date)
+        chosenPackage = weddingPackage(null, new Date(date));
     }
 
     return (
@@ -160,15 +168,15 @@ const Page6 = (updateState: any) => {
                         <input id="proposedDate" className="form-control" type="date"
                                onChange={e => setPackage(e.target.value)}/>
                     </div>
-                    {weddingPackage &&
+                    {chosenPackage &&
                         <div>
-                            The date chosen falls into our {weddingPackage.name} in the {weddingPackage.season} on a {weddingPackage.getDayString(day)} and starts at £{weddingPackage.cost}.00
+                            The date chosen falls into our {chosenPackage.name} in the {chosenPackage.season} on a {chosenPackage.getDayString(day)} and starts at £{chosenPackage.cost}.00
                             <img src="./images/ultimate-castle.jpg"/>
                         </div>
                     }
                 </div>
                 <div className="col">
-                    {weddingPackage &&
+                    {chosenPackage &&
                     <div>
                         Information about the package can go here.
                     </div>
@@ -179,9 +187,37 @@ const Page6 = (updateState: any) => {
     )
 }
 
-const pages = {
-    Page1, Page2
-}
+// const Page7 = (updateState: any) => {
+//
+//
+//     return (
+//         <div >
+//             <h1>Choose Your Menu</h1>
+//             <div >
+//                 <div className="col">
+//                     <div className="form-group">
+//                         <label htmlFor="proposedDate">Choose Your Date</label>
+//                         <input id="proposedDate" className="form-control" type="date"
+//                                onChange={e => setPackage(e.target.value)}/>
+//                     </div>
+//                     {chosenPackage &&
+//                     <div>
+//                         The date chosen falls into our {chosenPackage.name} in the {chosenPackage.season} on a {chosenPackage.getDayString(day)} and starts at £{chosenPackage.cost}.00
+//                         <img src="./images/ultimate-castle.jpg"/>
+//                     </div>
+//                     }
+//                 </div>
+//                 <div className="col">
+//                     {chosenPackage &&
+//                     <div>
+//                         Information about the package can go here.
+//                     </div>
+//                     }
+//                 </div>
+//             </div>
+//         </div>
+//     )
+// }
 
 class App extends React.Component<any, any>{
     constructor(props: any){
@@ -218,7 +254,9 @@ class App extends React.Component<any, any>{
                     backButton: "<< Guest Numbers",
                     //nextButton: "Next >>"
                 },
-            ]
+            ],
+            meetingDate: {},
+            staffName: ""
         };
 
     }
@@ -236,7 +274,11 @@ class App extends React.Component<any, any>{
     render(){
         return (
             <div>
-                {this.state.index===0 && <Page1 updateState={this.updateState} meetingDate={this.state.meetingDate} />}
+                {this.state.index===0 &&
+                    <StaffDetail updateState={this.updateState}
+                                 meetingDate={this.state.meetingDate}
+                                 firstName={this.state.staffName}
+                    />}
                 {this.state.index===1 && <Page2 updateState={this.updateState} />}
                 {this.state.index===2 && <Page3 updateState={this.updateState} />}
                 {this.state.index===3 && <Page4 updateState={this.updateState} />}
