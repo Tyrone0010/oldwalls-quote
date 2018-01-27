@@ -1,8 +1,8 @@
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
 import Moment from 'react-moment';
-import {weddingPackage} from './data/packages';
-import {weddingMenu} from './data/menus';
+import {weddingPackage} from '../content/data/packages';
+import {weddingMenu} from '../content/data/menus';
 
 interface IStaffDetailProps {
     firstName: string,
@@ -61,27 +61,31 @@ const Page2 = (props: any) => {
             {
                 props.customerNames && props.customerNames.length > 0 &&
                     props.customerNames.map((customer: any) => {
-                        <button type="button" className="list-group-item list-group-item-action active">
-                            {{customer}}
-                        </button>
+                        return(
+                            <button type="button" className="list-group-item list-group-item-action">
+                                {customer}
+                            </button>
+                        )
                     })
             }
+
             </div>
             <div className="row">
                 <div className="form-group col-md-3">
                     <label htmlFor="proposedWeddingDate">First Name</label>
-                    <input id="proposedWeddingDate" defaultValue={props.firstName} className="form-control" type="text"
+                    <input id="proposedWeddingDate" value={props.firstName} className="form-control" type="text"
                            onChange={e => update("firstName", e.target.value)}/>
                 </div>
             </div>
             <div className="row">
                 <div className="form-group col-md-3">
                     <label htmlFor="staffMember">Surname</label>
-                    <input id="staffMember" defaultValue={props.surname} className="form-control" type="text"
+                    <input id="staffMember" value={props.surname} className="form-control" type="text"
                            onChange={e => update("surname", e.target.value)}/>
                 </div>
             </div>
             <button type="submit" className="btn btn-outline-light mb-2" onClick={() => {addCustomer();}}>Add guest</button>
+            <div></div>
         </div>
     )
 }
@@ -219,6 +223,7 @@ const Page6 = (props: any) => {
         props.updateState('chosenPackage', chosenPackage);
     }
 
+    const weddingDate = new Date(props.weddingDate);
     return (
         <div>
             <h1>Packages</h1>
@@ -232,9 +237,9 @@ const Page6 = (props: any) => {
                     <div className="form-group">
                         {props.chosenPackage &&
                         <div>
-                            The date chosen falls into our {props.chosenPackage.name} in the {props.chosenPackage.season} on
-                            a {props.chosenPackage.getDayString(day)} and starts at £{props.chosenPackage.cost}.00
-                            <img src="src/images/ultimate-castle.jpg"/>
+                            The date chosen falls into our <b>{props.chosenPackage.name}</b> in the <b>{props.chosenPackage.season}</b> on
+                            a {props.chosenPackage.getDayString(weddingDate.getDay())} and starts at <b>£{props.chosenPackage.cost}.00</b>
+                            <img className="img-responsive img-circle" src="content/images/ultimate-castle.jpg"/>
                         </div>
                         }
                     </div>
@@ -252,37 +257,51 @@ const Page6 = (props: any) => {
 }
 
 
-// const Page7 = (updateState: any) => {
-//
-//
-//     return (
-//         <div >
-//             <h1>Choose Your Menu</h1>
-//             <div >
-//                 <div className="col">
-//                     <div className="form-group">
-//                         <label htmlFor="proposedDate">Choose Your Date</label>
-//                         <input id="proposedDate" className="form-control" type="date"
-//                                onChange={e => setPackage(e.target.value)}/>
-//                     </div>
-//                     {chosenPackage &&
-//                     <div>
-//                         The date chosen falls into our {chosenPackage.name} in the {chosenPackage.season} on a {chosenPackage.getDayString(day)} and starts at £{chosenPackage.cost}.00
-//                         <img src="./images/ultimate-castle.jpg"/>
-//                     </div>
-//                     }
-//                 </div>
-//                 <div className="col">
-//                     {chosenPackage &&
-//                     <div>
-//                         Information about the package can go here.
-//                     </div>
-//                     }
-//                 </div>
-//             </div>
-//         </div>
-//     )
-// }
+const Page7 = (props: any) => {
+    const updatePanel = (menu: any) => {
+        props.updateState('weddingMenu', menu);
+    }
+
+    return (
+        <div >
+            <h1>Choose Your Menu</h1>
+            <div className="row">
+                <div className="col-md-4">
+                    {
+                        weddingMenu(null).map((menus: any) => {
+                            return (
+                                <div>
+                                    <div key={menus.title}>{menus.title}</div>
+                                    {
+                                        menus.items.map((menu: any) => {
+                                            return(
+                                                <div key={menu.name} className="radio">
+                                                    <label>
+                                                        <input type="radio" name="menuRadio" value={menu.name} />
+                                                        <a onClick={(e) => {updatePanel(menu)}}>{menu.name}</a>
+                                                    </label>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+                <div className="col-md-8">
+                    {props.weddingMenu &&
+                        <div className="panel panel-default" >
+                            <div className="panel-body">
+                                {props.weddingMenu.name}
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    )
+}
 
 class App extends React.Component<any, any>{
     constructor(props: any){
@@ -317,6 +336,11 @@ class App extends React.Component<any, any>{
                 {
                     title: "Packages",
                     backButton: "<< Guest Numbers",
+                    nextButton: "Menus >>"
+                },
+                {
+                    title: "Menus",
+                    backButton: "<< Packages",
                     //nextButton: "Next >>"
                 },
             ],
@@ -407,6 +431,9 @@ class App extends React.Component<any, any>{
             case "chosenPackage":
                 this.setState({ chosenPackage: value });
                 break;
+            case "weddingMenu":
+                this.setState({ weddingMenu: value });
+                break;
             default:
                 break;
         }
@@ -436,17 +463,48 @@ class App extends React.Component<any, any>{
                         customerNames={this.state.customerNames}
                     />
                 }
-                {this.state.index===2 && <Page3 updateState={this.updateState} />}
-                {this.state.index===3 && <Page4 updateState={this.updateState}
-                                                hearAboutUs={this.state.hearAboutUs}
-                />}
-                {this.state.index===4 && <Page5 updateState={this.updateState}
-                                                adultNumbers={this.state.adultNumbers}
-                                                childNumbers={this.state.childNumbers}
-                                                teenNumbers={this.state.teenNumbers}
-                                                eveningNumbers={this.state.eveningNumbers}
-                />}
-                {this.state.index===5 && <Page6 updateState={this.updateState} weddingDate={this.state.weddingDate} chosenPackage={this.state.chosenPackage}/>}
+                {this.state.index===2 &&
+                    <Page3
+                        updateState={this.updateState}
+                        houseNameNumber={this.state.houseNameNumber}
+                        street={this.state.street}
+                        address2={this.state.address2}
+                        townCity={this.state.townCity}
+                        postcode={this.state.postcode}
+                        email={this.state.email}
+                        telephoneHome={this.state.telephoneHome}
+                        telephoneMobile={this.state.telephoneMobile}
+                    />
+                }
+                {this.state.index===3 &&
+                    <Page4
+                        updateState={this.updateState}
+                        hearAboutUs={this.state.hearAboutUs}
+                        hearAboutShowcase={this.state.hearAboutShowcase}
+                    />
+                }
+                {this.state.index===4 &&
+                    <Page5
+                        updateState={this.updateState}
+                        adultNumbers={this.state.adultNumbers}
+                        childNumbers={this.state.childNumbers}
+                        teenNumbers={this.state.teenNumbers}
+                        eveningNumbers={this.state.eveningNumbers}
+                    />
+                }
+                {this.state.index===5 &&
+                    <Page6
+                        updateState={this.updateState}
+                        weddingDate={this.state.weddingDate}
+                        chosenPackage={this.state.chosenPackage}
+                    />
+                }
+                {this.state.index===6 &&
+                <Page7
+                    updateState={this.updateState}
+                    weddingMenu={this.state.weddingMenu}
+                />
+                }
                 {   this.state.pages[this.state.index].backButton &&
                     <button type="button" className="btn btn-outline-light" onClick={e => {this.setState({index: this.state.index - 1})}}>
                         {this.state.pages[this.state.index].backButton}

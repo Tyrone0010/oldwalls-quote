@@ -68,6 +68,7 @@ const weddingMenu = (menuData: any) => {
             ]
         },
     ];
+
     return data;
 }
 

@@ -1,14 +1,22 @@
 var path = require("path");
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 var config = {
     /* The entry point of the application. Webpack uses this information to create the dependency tree which is used to bundle the scripts.*/
     entry: ["./src/App.tsx"],
+    plugins: [
+        new CleanWebpackPlugin(['build']),
+        new HtmlWebpackPlugin({
+            title: 'Production'
+        })
+   ],
     /* This information is used to give the name of the bundled file and the location of the bundled file. */
     output: {
         path: path.resolve(__dirname, "build"),
         publicPath: "/build/",
         filename: "bundle.js"
     },
-    devtool: "inline-sourcemap",
     /* The extensions which will be imported or required in the application scripts. */
     resolve: {
         extensions: [".ts", ".tsx", ".js"]
