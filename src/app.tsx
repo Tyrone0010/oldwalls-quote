@@ -277,7 +277,7 @@ const Page7 = (props: any) => {
                                             return(
                                                 <div key={menu.name} className="radio">
                                                     <label>
-                                                        <input type="radio" name="menuRadio" value={menu.name} />
+                                                        <input type="radio" name={menu.type} value={menu.name} />
                                                         <a onClick={(e) => {updatePanel(menu)}}>{menu.name}</a>
                                                     </label>
                                                 </div>
@@ -293,12 +293,17 @@ const Page7 = (props: any) => {
                     {props.weddingMenu &&
                         <div className="panel panel-default" >
                             <div className="panel-body menu">
-                                <h3>{props.weddingMenu.name} <span className="badge">Price per head: £{props.weddingMenu.pricePerHead}</span></h3>
-                                <img src={props.weddingMenu.imageUrl}/>
+                                <h3 className="menu">{props.weddingMenu.name} <span className="badge">Price per head: £{props.weddingMenu.pricePerHead}</span></h3>
+                                <div className="row">
+                                    <div className="col-md-4">
+                                        <img className="img-responsive img-circle" src={props.weddingMenu.imageUrl}/>
+                                    </div>
+                                    <div className="col-md-8">&nbsp;</div>
+                                </div>
                                 {/*Starters*/}
                                 {
                                     props.weddingMenu.menu.starters &&
-                                    <h4>
+                                    <h4 className="menu">
                                         {props.weddingMenu.menu.starters.title}
                                     </h4>
                                 }
@@ -308,8 +313,8 @@ const Page7 = (props: any) => {
                                     props.weddingMenu.menu.starters.items.map((starters: any) => {
                                         return(
                                             <a href="#" className="list-group-item">
-                                                <h5 className="list-group-item-heading">{starters.title}</h5>
-                                                <p className="list-group-item-text">{starters.subText}</p>
+                                                <h5 className="list-group-item-heading menu">{starters.title}</h5>
+                                                <p className="list-group-item-text menu-description">{starters.subText}</p>
                                             </a>
                                         )
                                     })
@@ -318,48 +323,43 @@ const Page7 = (props: any) => {
                                 {/*Main*/}
                                 {
                                     props.weddingMenu.menu.main &&
-                                    <div>
-                                        <div className="row">
-                                            <div className="col-md-12">
-                                                {props.weddingMenu.menu.main.title}
-                                            </div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col-md-6">
-                                                <img className="img-responsive img-rounded" src={props.weddingMenu.menu.main.imageUrl}/>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <h4 className="menu">
+                                        {props.weddingMenu.menu.main.title}
+                                    </h4>
                                 }
+                                <div className="list-group">
                                 {
                                     props.weddingMenu.menu.main &&
                                     props.weddingMenu.menu.main.items.map((m: any) => {
                                         return(
-                                            <div>
-                                                <div>{m.title}</div>
-                                                <div>{m.subText}</div>
-                                            </div>
+                                            <a href="#" className="list-group-item">
+                                                <h5 className="list-group-item-heading menu">{m.title}</h5>
+                                                <p className="list-group-item-text menu-description">{m.subText}</p>
+                                            </a>
                                         )
                                     })
                                 }
+                                </div>
                                 {/*Desert*/}
                                 {
                                     props.weddingMenu.menu.desserts &&
-                                    <div>
+                                    <h4 className="menu">
                                         {props.weddingMenu.menu.desserts.title}
-                                    </div>
+                                    </h4>
                                 }
+                                <div className="list-group">
                                 {
                                     props.weddingMenu.menu.desserts &&
                                     props.weddingMenu.menu.desserts.items.map((dessert: any) => {
                                         return(
-                                            <div>
-                                                <div>{dessert.title}</div>
-                                                <div>{dessert.subText}</div>
-                                            </div>
+                                            <a href="#" className="list-group-item">
+                                                <h5 className="list-group-item-heading menu">{dessert.title}</h5>
+                                                <p className="list-group-item-text menu-description">{dessert.subText}</p>
+                                            </a>
                                         )
                                     })
                                 }
+                                </div>
                             </div>
                         </div>
                     }

@@ -2,11 +2,12 @@ const weddingMenu = (menuData: any) => {
     let data = [
         {
             title: "Wedding Breakfast",
+            type: "breakfast",
             items: [
                 {
                     name: "Platinum Menu",
                     pricePerHead: 59,
-                    imageUrl: "./content/images/patinum-main.jpeg",
+                    imageUrl: "/content/images/platinum-main.jpg",
                     menu: {
                         starters: {
                             title: "STARTERS",
@@ -218,18 +219,83 @@ const weddingMenu = (menuData: any) => {
         },
         {
             title: "Drinks",
+            type: "drinks",
             items: [
                 {
-                    name: "Drinks 1",
-                    pricePerHead: 5,
+                    name: "SIGNATURE",
+                    pricePerHead: 15,
                     imageUrl: "",
                     menu: {
+                        main: {
+                            items:[
+                                {title: "Pimms/Winter Pimms and Corona on arrival"},
+                                {title: "1/3 bottle of wine"},
+                                {title: "Prosecco toast"},
+                            ]
+                        }
+                    }
+                },
+                {
+                    name: "GOLD",
+                    pricePerHead: 20,
+                    imageUrl: "",
+                    menu: {
+                        main: {
+                            items:[
+                                {title: "Prosecco, Peroni or Salitos on arrival"},
+                                {title: "Half a bottle of wine (Gold selection)"},
+                                {title: "Prosecco toast"},
+                            ]
+                        }
+                    }
+                },
+                {
+                    name: "PLATINUM",
+                    pricePerHead: 25,
+                    imageUrl: "",
+                    menu: {
+                        main: {
+                            items:[
+                                {title: "A choice of our house champagne, Welsh sparkling wine, Peroni or Salitos on arrival"},
+                                {title: "Half a bottle of wine (Platinum selection)"},
+                                {title: "House champagne for toasting"},
+                            ]
+                        }
+                    }
+                },
+                {
+                    name: "DIAMOND",
+                    pricePerHead: 30,
+                    imageUrl: "",
+                    menu: {
+                        main: {
+                            items:[
+                                {title: "Taittinger champagne, bespoke cocktail, Gower Gold or Peroni on arrival"},
+                                {title: "Half a bottle of wine (Diamond selection)"},
+                                {title: "Taittinger champagne for toasting"},
+                            ]
+                        }
+                    }
+                },
+                {
+                    name: "RUSTIC",
+                    pricePerHead: 25,
+                    imageUrl: "",
+                    menu: {
+                        main: {
+                            items:[
+                                {title: "Gower Brewery cask or Birra Moretti or bespoke cocktail on arrival"},
+                                {title: "A shot of Penderyn Whisky or Welsh sparkling wine for toast"},
+                                {title: "Half bottle of Welsh wine for table"},
+                            ]
+                        }
                     }
                 }
             ]
         },
         {
             title: "Evening Buffet",
+            type: "evening",
             items: [
                 {
                     name: "PICNIC",

@@ -4,7 +4,7 @@ body {
     background: lightgray;
 }
 
-h5.menu{
+h5.menu, h4.menu, h3.menu{
     color: #ad9871 !important;
 }
 
@@ -155,6 +155,10 @@ h1, h2, h3, h4, h5, h6{
 }
 
 .sidebar-nav li a {
+    color: #6f6f6f !important;
+}
+
+p.menu-description{
     color: #6f6f6f !important;
 }
 
