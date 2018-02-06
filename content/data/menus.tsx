@@ -2,7 +2,7 @@ const weddingMenu = (menuData: any) => {
     let data = [
         {
             title: "Wedding Breakfast",
-            type: "breakfast",
+            typeName: "breakfast",
             items: [
                 {
                     name: "Platinum Menu",
@@ -219,7 +219,7 @@ const weddingMenu = (menuData: any) => {
         },
         {
             title: "Drinks",
-            type: "drinks",
+            typeName: "drinks",
             items: [
                 {
                     name: "SIGNATURE",
@@ -295,7 +295,7 @@ const weddingMenu = (menuData: any) => {
         },
         {
             title: "Evening Buffet",
-            type: "evening",
+            typeName: "evening",
             items: [
                 {
                     name: "PICNIC",

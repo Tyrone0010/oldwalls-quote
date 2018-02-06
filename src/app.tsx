@@ -3,6 +3,7 @@ import * as ReactDom from 'react-dom';
 import Moment from 'react-moment';
 import {weddingPackage} from '../content/data/packages';
 import {weddingMenu} from '../content/data/menus';
+//import QuotationDetail from './components/QuotationDetail'
 
 interface IStaffDetailProps {
     firstName: string,
@@ -63,7 +64,7 @@ const Page2 = (props: any) => {
                     props.customerNames.map((customer: any) => {
                         return(
                             <button type="button" className="list-group-item list-group-item-action">
-                                {customer}
+                                {customer.firstName + ' ' + customer.surname}
                             </button>
                         )
                     })
@@ -256,10 +257,9 @@ const Page6 = (props: any) => {
     )
 }
 
-
 const Page7 = (props: any) => {
     const updatePanel = (menu: any) => {
-        props.updateState('weddingMenu', menu);
+        props.updateState('weddingMenus', menu);
     }
 
     return (
@@ -277,7 +277,7 @@ const Page7 = (props: any) => {
                                             return(
                                                 <div key={menu.name} className="radio">
                                                     <label>
-                                                        <input type="radio" name={menu.type} value={menu.name} />
+                                                        <input type="radio" name={menus.typeName} value={menu.name} />
                                                         <a onClick={(e) => {updatePanel(menu)}}>{menu.name}</a>
                                                     </label>
                                                 </div>
@@ -290,27 +290,27 @@ const Page7 = (props: any) => {
                     }
                 </div>
                 <div className="col-md-8">
-                    {props.weddingMenu &&
+                    {props.chosenMenu &&
                         <div className="panel panel-default" >
                             <div className="panel-body menu">
-                                <h3 className="menu">{props.weddingMenu.name} <span className="badge">Price per head: £{props.weddingMenu.pricePerHead}</span></h3>
+                                <h3 className="menu">{props.chosenMenu.name} <span className="badge">Price per head: £{props.chosenMenu.pricePerHead}</span></h3>
                                 <div className="row">
                                     <div className="col-md-4">
-                                        <img className="img-responsive img-circle" src={props.weddingMenu.imageUrl}/>
+                                        <img className="img-responsive img-circle" src={props.chosenMenu.imageUrl}/>
                                     </div>
                                     <div className="col-md-8">&nbsp;</div>
                                 </div>
                                 {/*Starters*/}
                                 {
-                                    props.weddingMenu.menu.starters &&
+                                    props.chosenMenu.menu.starters &&
                                     <h4 className="menu">
-                                        {props.weddingMenu.menu.starters.title}
+                                        {props.chosenMenu.menu.starters.title}
                                     </h4>
                                 }
                                 <div className="list-group">
                                 {
-                                    props.weddingMenu.menu.starters &&
-                                    props.weddingMenu.menu.starters.items.map((starters: any) => {
+                                    props.chosenMenu.menu.starters &&
+                                    props.chosenMenu.menu.starters.items.map((starters: any) => {
                                         return(
                                             <a href="#" className="list-group-item">
                                                 <h5 className="list-group-item-heading menu">{starters.title}</h5>
@@ -322,15 +322,15 @@ const Page7 = (props: any) => {
                                 </div>
                                 {/*Main*/}
                                 {
-                                    props.weddingMenu.menu.main &&
+                                    props.chosenMenu.menu.main &&
                                     <h4 className="menu">
-                                        {props.weddingMenu.menu.main.title}
+                                        {props.chosenMenu.menu.main.title}
                                     </h4>
                                 }
                                 <div className="list-group">
                                 {
-                                    props.weddingMenu.menu.main &&
-                                    props.weddingMenu.menu.main.items.map((m: any) => {
+                                    props.chosenMenu.menu.main &&
+                                    props.chosenMenu.menu.main.items.map((m: any) => {
                                         return(
                                             <a href="#" className="list-group-item">
                                                 <h5 className="list-group-item-heading menu">{m.title}</h5>
@@ -342,15 +342,15 @@ const Page7 = (props: any) => {
                                 </div>
                                 {/*Desert*/}
                                 {
-                                    props.weddingMenu.menu.desserts &&
+                                    props.chosenMenu.menu.desserts &&
                                     <h4 className="menu">
-                                        {props.weddingMenu.menu.desserts.title}
+                                        {props.chosenMenu.menu.desserts.title}
                                     </h4>
                                 }
                                 <div className="list-group">
                                 {
-                                    props.weddingMenu.menu.desserts &&
-                                    props.weddingMenu.menu.desserts.items.map((dessert: any) => {
+                                    props.chosenMenu.menu.desserts &&
+                                    props.chosenMenu.menu.desserts.items.map((dessert: any) => {
                                         return(
                                             <a href="#" className="list-group-item">
                                                 <h5 className="list-group-item-heading menu">{dessert.title}</h5>
@@ -369,11 +369,64 @@ const Page7 = (props: any) => {
     )
 }
 
+const Quotation = (props: any) => {
+    return (
+        <div>
+            <h1>Congratulations</h1>
+            <div className="row">
+                <div className="col-md-12">
+                    <div>
+                        {
+                            props.customerNames.map((name: any, index: number) => {
+                                return(
+                                    <span>{index !== 0 ?' & ' : ' '}{name.firstName}</span>
+                                )
+                            })
+                        }
+                    </div>
+                    <div>
+                        Save the Date: {props.weddingDate}
+                    </div>
+                    <hr />
+                    <div>
+                        <h4>Your wedding package includes:</h4>
+                        {/*<QuotationDetail />*/}
+                    </div>
+                    <div>
+                        Your wedding booking co-ordinator is {props.staffMember} who you can call on 07814??????
+                    </div>
+                </div>
+            </div>
+            <div className="row">
+                <h3>THE NEXT STEPS</h3>
+                <div className="col-md-4">
+                    <h4>Within 7 days</h4>
+                    <div>
+                        Confirm your booking with a £500 deposit or we will see you again on the ??th Month 2018
+                    </div>
+                </div>
+                <div className="col-md-4">
+                    <h4>Within 30-60 days</h4>
+                    <div>
+                        Full deposit required and introduction to your dedicated wedding co-ordinator
+                    </div>
+                </div>
+                <div className="col-md-4">
+                    <h4>Within 8-12 months (approx)</h4>
+                    <div>
+                        Prior to your wedding day an invitation to your lavish wedding taster evening
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
 class App extends React.Component<any, any>{
     constructor(props: any){
         super(props);
         this.state = {
-            index: 0,
+            index: 6,
             pages: [
                 {
                     title: "Staff Detail",
@@ -407,6 +460,11 @@ class App extends React.Component<any, any>{
                 {
                     title: "Menus",
                     backButton: "<< Packages",
+                    nextButton: "Quote >>"
+                },
+                {
+                    title: "Quote",
+                    backButton: "<< Menus",
                     //nextButton: "Next >>"
                 },
             ],
@@ -430,12 +488,14 @@ class App extends React.Component<any, any>{
             EveningNumbers:0,
             weddingDate:"",
             customerNames: [],
-            chosenPackage: null
+            chosenPackage: null,
+            weddingMenus: {},
+            chosenMenu: ""
         };
 
     }
 
-    updateState = (name: string, value: string) => {
+    updateState = (name: string, value: any) => {
         switch(name){
             case "meetingDate":
                 this.setState({ meetingDate: value });
@@ -497,8 +557,16 @@ class App extends React.Component<any, any>{
             case "chosenPackage":
                 this.setState({ chosenPackage: value });
                 break;
-            case "weddingMenu":
-                this.setState({ weddingMenu: value });
+            case "weddingMenus":
+                const c = value;
+                if(this.state.weddingMenus[value.name]){
+                    this.setState({chosenMenu : value.name});
+                }else{
+                    this.setState({chosenMenu : value.name});
+                    let weddingMenusCopy = this.state.weddingMenus;
+                    weddingMenusCopy[value.name] = value;
+                    this.setState({weddingMenus : weddingMenusCopy});
+                }
                 break;
             default:
                 break;
@@ -506,7 +574,7 @@ class App extends React.Component<any, any>{
     }
 
     addCustomer = () => {
-        let list = [...this.state.customerNames, this.state.firstName + " " + this.state.surname];
+        let list = [...this.state.customerNames, { firstName: this.state.firstName, surname: this.state.surname}];
         this.setState({ firstName: "" });
         this.setState({ surname: "" });
         this.setState({ customerNames: list });
@@ -568,7 +636,12 @@ class App extends React.Component<any, any>{
                 {this.state.index===6 &&
                 <Page7
                     updateState={this.updateState}
-                    weddingMenu={this.state.weddingMenu}
+                    weddingMenu={weddingMenu}
+                    chosenMenu={this.state.weddingMenus[this.state.chosenMenu]}
+                />
+                }
+                {this.state.index===7 &&
+                <Quotation
                 />
                 }
                 {   this.state.pages[this.state.index].backButton &&
