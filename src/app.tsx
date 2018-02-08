@@ -3,7 +3,7 @@ import * as ReactDom from 'react-dom';
 import Moment from 'react-moment';
 import {weddingPackage} from '../content/data/packages';
 import {weddingMenu} from '../content/data/menus';
-//import QuotationDetail from './components/QuotationDetail'
+import QuotationDetail from './components/QuotationDetail'
 
 interface IStaffDetailProps {
     firstName: string,
@@ -390,7 +390,7 @@ const Quotation = (props: any) => {
                     <hr />
                     <div>
                         <h4>Your wedding package includes:</h4>
-                        {/*<QuotationDetail />*/}
+                        {<QuotationDetail {...props} />}
                     </div>
                     <div>
                         Your wedding booking co-ordinator is {props.staffMember} who you can call on 07814??????
@@ -426,7 +426,7 @@ class App extends React.Component<any, any>{
     constructor(props: any){
         super(props);
         this.state = {
-            index: 6,
+            index: 0,
             pages: [
                 {
                     title: "Staff Detail",
@@ -482,14 +482,14 @@ class App extends React.Component<any, any>{
             telephoneMobile:"",
             hearAboutUs:"",
             hearAboutShowcase:"",
-            numberOfAdults:0,
-            numberOfChildren:0,
-            numberOfTeens:0,
-            EveningNumbers:0,
+            adultNumbers:"",
+            childNumbers:"",
+            teenNumbers:"",
+            eveningNumbers:"",
             weddingDate:"",
             customerNames: [],
             chosenPackage: null,
-            weddingMenus: {},
+            weddingMenus: {keys:[]},
             chosenMenu: ""
         };
 
@@ -539,17 +539,21 @@ class App extends React.Component<any, any>{
             case "hearAboutShowcase":
                 this.setState({ hearAboutShowcase: value });
                 break;
-            case "numberOfAdults":
-                this.setState({ numberOfAdults: value });
+            case "adultNumbers":
+                const adultNumbers = +value;
+                this.setState({ adultNumbers: adultNumbers });
                 break;
-            case "numberOfChildren":
-                this.setState({ numberOfChildren: value });
+            case "childNumbers":
+                const childNumbers = +value;
+                this.setState({ childNumbers: childNumbers });
                 break;
-            case "numberOfTeens":
-                this.setState({ numberOfTeens: value });
+            case "teenNumbers":
+                const teenNumbers = +value;
+                this.setState({ teenNumbers: teenNumbers });
                 break;
-            case "EveningNumbers":
-                this.setState({ EveningNumbers: value });
+            case "eveningNumbers":
+                const eveningNumbers = +value;
+                this.setState({ eveningNumbers: eveningNumbers });
                 break;
             case "weddingDate":
                 this.setState({ weddingDate: value });
@@ -558,13 +562,20 @@ class App extends React.Component<any, any>{
                 this.setState({ chosenPackage: value });
                 break;
             case "weddingMenus":
-                const c = value;
-                if(this.state.weddingMenus[value.name]){
+                if(this.state.weddingMenus.keys.indexOf(value.name) >= 0){
                     this.setState({chosenMenu : value.name});
                 }else{
                     this.setState({chosenMenu : value.name});
                     let weddingMenusCopy = this.state.weddingMenus;
+                    this.state.weddingMenus.keys.map((menu:any, index:number) => {
+                        if(value.typeName === weddingMenusCopy[menu].typeName){
+                            const menuIndex =  this.state.weddingMenus.keys.indexOf(menu);
+                            weddingMenusCopy.keys.splice(menuIndex, 1);
+                            delete weddingMenusCopy[menu];
+                        }
+                    });
                     weddingMenusCopy[value.name] = value;
+                    weddingMenusCopy.keys.push(value.name);
                     this.setState({weddingMenus : weddingMenusCopy});
                 }
                 break;
@@ -642,6 +653,15 @@ class App extends React.Component<any, any>{
                 }
                 {this.state.index===7 &&
                 <Quotation
+                    customerNames={this.state.customerNames}
+                    weddingDate={this.state.weddingDate}
+                    staffMember={this.state.staffMember}
+                    weddingPackage={this.state.chosenPackage}
+                    weddingMenus={this.state.weddingMenus}
+                    adultNumbers={this.state.adultNumbers}
+                    childNumbers={this.state.childNumbers}
+                    teenNumbers={this.state.teenNumbers}
+                    eveningNumbers={this.state.eveningNumbers}
                 />
                 }
                 {   this.state.pages[this.state.index].backButton &&

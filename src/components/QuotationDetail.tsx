@@ -1,24 +1,31 @@
 import * as React from 'react';
-import {IPackageData, IPackagesData} from '../interfaces/IPackageData';
+import {menuCosting, totalCosting} from '../utilities/menuCosting';
 
-export default class QuotationDetail extends React.Component<IPackagesData, {}>  {
-    constructor(props: IPackagesData){
+export default class QuotationDetail extends React.Component<any, {}>  {
+    constructor(props: any){
         super(props);
     }
 
     render() {
         return (
-            <div className="row">
-                <h3>Your wedding package includes:</h3>
+            <div>
+                <div className="row">
+                    <div className="col-md-8">
+                        {this.props.weddingPackage.name}
+                    </div>
+                    <div className="col-md-4">
+                        £{this.props.weddingPackage.cost}
+                    </div>
+                </div>
                 {
-                    this.props.packageData.map((item: IPackageData, index: number) => {
+                    this.props.weddingMenus.keys.map((item: any) => {
                         return (
                             <div className="row">
                                 <div className="col-md-8">
-                                    {item.title}
+                                    {this.props.weddingMenus[item].name}
                                 </div>
                                 <div className="col-md-4">
-                                    £{item.cost * item.amount}
+                                    £{menuCosting(this.props.adultNumbers, this.props.childNumbers, this.props.teenNumbers, this.props.eveningNumbers, this.props.weddingMenus[item])}
                                 </div>
                             </div>
                         )
@@ -29,7 +36,7 @@ export default class QuotationDetail extends React.Component<IPackagesData, {}> 
                         Total cost:
                     </div>
                     <div className="col-md-4">
-                        £{this.props.totalCost()}
+                        £{totalCosting(this.props.adultNumbers, this.props.childNumbers, this.props.teenNumbers, this.props.eveningNumbers, this.props.weddingMenus) + this.props.weddingPackage.cost}
                     </div>
                 </div>
             </div>

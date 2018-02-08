@@ -6,6 +6,7 @@ const weddingMenu = (menuData: any) => {
             items: [
                 {
                     name: "Platinum Menu",
+                    typeName: "breakfast",
                     pricePerHead: 59,
                     imageUrl: "/content/images/platinum-main.jpg",
                     menu: {
@@ -104,6 +105,7 @@ const weddingMenu = (menuData: any) => {
                 },
                 {
                     name: "Diamond Menu",
+                    typeName: "breakfast",
                     pricePerHead: 69,
                     imageUrl: "",
                     menu: {
@@ -202,6 +204,7 @@ const weddingMenu = (menuData: any) => {
                 },
                 {
                     name: "Gold Menu",
+                    typeName: "breakfast",
                     pricePerHead: 25,
                     imageUrl: "",
                     menu: {
@@ -223,6 +226,7 @@ const weddingMenu = (menuData: any) => {
             items: [
                 {
                     name: "SIGNATURE",
+                    typeName: "drinks",
                     pricePerHead: 15,
                     imageUrl: "",
                     menu: {
@@ -237,6 +241,7 @@ const weddingMenu = (menuData: any) => {
                 },
                 {
                     name: "GOLD",
+                    typeName: "drinks",
                     pricePerHead: 20,
                     imageUrl: "",
                     menu: {
@@ -251,6 +256,7 @@ const weddingMenu = (menuData: any) => {
                 },
                 {
                     name: "PLATINUM",
+                    typeName: "drinks",
                     pricePerHead: 25,
                     imageUrl: "",
                     menu: {
@@ -265,6 +271,7 @@ const weddingMenu = (menuData: any) => {
                 },
                 {
                     name: "DIAMOND",
+                    typeName: "drinks",
                     pricePerHead: 30,
                     imageUrl: "",
                     menu: {
@@ -279,6 +286,7 @@ const weddingMenu = (menuData: any) => {
                 },
                 {
                     name: "RUSTIC",
+                    typeName: "drinks",
                     pricePerHead: 25,
                     imageUrl: "",
                     menu: {
@@ -299,6 +307,7 @@ const weddingMenu = (menuData: any) => {
             items: [
                 {
                     name: "PICNIC",
+                    typeName: "evening",
                     pricePerHead: 15,
                     imageUrl: "",
                     menu: {
@@ -320,6 +329,7 @@ const weddingMenu = (menuData: any) => {
                 },
                 {
                     name: "DEEP SOUTH",
+                    typeName: "evening",
                     pricePerHead: 18.50,
                     imageUrl: "",
                     menu: {
@@ -338,6 +348,7 @@ const weddingMenu = (menuData: any) => {
                 },
                 {
                     name: "BBQ",
+                    typeName: "evening",
                     pricePerHead: 21.50,
                     imageUrl: "",
                     menu: {
@@ -358,6 +369,7 @@ const weddingMenu = (menuData: any) => {
                 },
                 {
                     name: "ASIAN FUSION",
+                    typeName: "evening",
                     pricePerHead: 23.50,
                     imageUrl: "",
                     menu: {
@@ -376,6 +388,7 @@ const weddingMenu = (menuData: any) => {
                 },
                 {
                     name: "SEAFOOD",
+                    typeName: "evening",
                     pricePerHead: 30,
                     imageUrl: "",
                     menu: {
