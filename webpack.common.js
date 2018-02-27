@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var config = {
     /* The entry point of the application. Webpack uses this information to create the dependency tree which is used to bundle the scripts.*/
-    entry: ["./src/App.tsx"],
+    entry: ["./src/public.tsx"],
     plugins: [
         new CleanWebpackPlugin(['build']),
         new HtmlWebpackPlugin({

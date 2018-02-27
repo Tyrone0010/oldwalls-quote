@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {menuCosting, totalCosting} from '../utilities/menuCosting';
+import {menuCosting, totalCosting} from '../../utilities/menuCosting';
 
 export default class QuotationDetail extends React.Component<any, {}>  {
     constructor(props: any){
