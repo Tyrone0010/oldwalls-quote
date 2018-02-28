@@ -1,26 +1,19 @@
 import * as React from 'react';
-import {Route, Switch} from 'react-router-dom';
-import Home from '../pages/Home';
-import Gallery from '../pages/Gallery';
+import HomePage from '../pages/Home';
 import QuotePage from '../pages/Quote';
+import GalleryPage from '../pages/Gallery';
+import LoginPage from '../pages/Login';
+import {Route, Switch, Redirect} from 'react-router-dom';
+import {PrivateRoute} from './auth/PrivateRoute';
 
-export default [
-    {
-        path: "/",
-        component: Home
-    },
-    {
-        path: "/home",
-        component: Home
-    },
-    {
-        path: "/gallery",
-        component: Gallery
-    },
-    {
-        path: "/quote",
-        component: QuotePage
-    }
-]
+export default (
+    <Switch>
+        <Route path="/" exact component={HomePage} />
+        <Route path="/home" exact component={HomePage} />
+        <Route path="/login" exact component={LoginPage} />
+        <PrivateRoute path="/quote" exact component={QuotePage} />
+        <Route path="/gallery" exact component={GalleryPage} />
+    </Switch>
+)
 
 
