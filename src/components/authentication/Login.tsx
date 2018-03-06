@@ -8,6 +8,7 @@ export default class Login extends React.Component<any, any>{
     }
 
     render(){
+        const {history} = this.props;
         return (
             <div>
                 <h1>Login to continue</h1>
@@ -24,7 +25,7 @@ export default class Login extends React.Component<any, any>{
                     </div>
                 </div>
                 <div className="row">
-                    <button type="button" className="btn btn-outline-light" onClick={e => {auth.authenticate(null)}}>
+                    <button type="button" className="btn btn-outline-light" onClick={e => {auth.authenticate(null, history)}}>
                         Login
                     </button>
                 </div>

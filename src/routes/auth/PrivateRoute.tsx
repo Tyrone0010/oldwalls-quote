@@ -9,7 +9,7 @@ export const PrivateRoute: React.StatelessComponent<RouteProps> = ({component: C
         if(!Component){
             return null;
         }
-        if(fakeAuth.isAuthenticated){
+        if(fakeAuth.isAuthenticated()){
             return <Component {...props} />
         }
         const redirectProps = {
