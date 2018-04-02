@@ -1,10 +1,26 @@
 import * as React from 'react';
+import { connect } from "react-redux";
+import { bindActionCreators, Dispatch } from "redux";
+import App from '../App';
+import IStoreState from '../../store/IStoreState';
+
+const makeMapStateToProps = (state: IStoreState) => {
+    return {
+
+    };
+}
+
+const makeMapDispatchToProps = (dispatch: Dispatch<IStoreState>) => {
+    return {
+
+    };
+}
 
 const getRandomImage = (min: number, max: number) => {
     return Math.floor(min + Math.random() * (max - min));
 }
 
-export default (props: any) => {
+const LoginView = (props: any) => {
     return(
         <div className="container">
             <div className="row">
@@ -18,3 +34,5 @@ export default (props: any) => {
         </div>
     )
 }
+
+export default connect(makeMapStateToProps, makeMapDispatchToProps)(LoginView);

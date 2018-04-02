@@ -1,7 +1,23 @@
 import * as React from 'react';
+import { connect } from "react-redux";
+import { bindActionCreators, Dispatch } from "redux";
 import auth from '../../actions/auth/authenticate';
+import IStoreState from '../../store/IStoreState';
 
-export default class Login extends React.Component<any, any>{
+
+const makeMapStateToProps = (state: IStoreState) => {
+    return {
+
+    };
+}
+
+const makeMapDispatchToProps = (dispatch: Dispatch<IStoreState>) => {
+    return {
+
+    };
+}
+
+class Login extends React.Component<any, any>{
 
     constructor(props: any){
         super(props);
@@ -33,3 +49,5 @@ export default class Login extends React.Component<any, any>{
         )
     }
 }
+
+export default connect(makeMapStateToProps, makeMapDispatchToProps)(Login);

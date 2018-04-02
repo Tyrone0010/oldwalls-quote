@@ -1,4 +1,7 @@
 import * as React from 'react';
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
+import IStoreState from '../../store/IStoreState';
 import StaffDetail from './StaffDetail';
 import Customers from './Customers';
 import ContactDetails from './ContactDetails';
@@ -9,8 +12,19 @@ import Menus from './Menus';
 import Quotation from './Quotation';
 import {weddingMenu} from '../../../content/data/menus';
 
+const makeMapStateToProps = (state: IStoreState) => {
+    return {
 
-export default class Quote extends React.Component<any, any>{
+    };
+}
+
+const makeMapDispatchToProps = (dispatch: Dispatch<IStoreState>) => {
+    return {
+
+    };
+}
+
+class Quote extends React.Component<any, any>{
     constructor(props: any){
         super(props);
         this.state = {
@@ -266,3 +280,5 @@ export default class Quote extends React.Component<any, any>{
         )
     }
 }
+
+export default connect(makeMapStateToProps, makeMapDispatchToProps)(Quote);
