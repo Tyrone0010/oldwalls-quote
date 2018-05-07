@@ -1,0 +1,4 @@
+export const UPDATE_CUSTOMERS = 'UPDATE_CUSTOMERS';
+export const UPDATE_CONTACT = 'UPDATE_CONTACT';
+export const UPDATE_NUMBERS = 'UPDATE_NUMBERS';
+export const RESET_FORM = 'RESET_FORM';

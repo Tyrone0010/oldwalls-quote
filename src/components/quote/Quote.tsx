@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import IStoreState from '../../store/IStoreState';
-import StaffDetail from './StaffDetail';
+import QuoteSearchList from './QuoteSearchList';
 import Customers from './Customers';
 import ContactDetails from './ContactDetails';
 import Feedback from './Feedback';
@@ -197,10 +197,7 @@ class Quote extends React.Component<any, any>{
         return (
             <div>
                 {this.state.index===0 &&
-                    <StaffDetail updateState={this.updateState}
-                                 meetingDate={this.state.meetingDate}
-                                 staffMember={this.state.staffMember}
-                    />}
+                    <QuoteSearchList />}
                 {this.state.index===1 &&
                     <Customers
                         updateState={this.updateState}

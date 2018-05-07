@@ -6,7 +6,7 @@ import configureStore from "../src/store/configureStore";
 
 
 export default (routes: any) => {
-    const store = configureStore({})
+    const store = configureStore({token: localStorage.getItem('TOKEN')})
     ReactDom.render(
         <Provider store={store}>
             <Router>

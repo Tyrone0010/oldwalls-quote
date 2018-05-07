@@ -8,7 +8,8 @@
     "removeComments": true,
     "target": "ES5",
     "sourceMap": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "lib": ["dom", "es2015.promise", "es5"]
   },
   "exclude": [
     "node_modules"
