@@ -1,114 +1,70 @@
 import * as React from 'react';
-import {weddingMenu} from '../../../content/data/menus';
+import { connect } from 'react-redux';
+import { Dispatch } from "redux";
+import {setNextStep, setPreviousStep} from '../../actions/wizard'
+import {makeGetAllMenus} from '../../selectors/menusSelector';
+import {makeGetselectedMenu} from '../../selectors/menuSectionsSelector'
+import MenuSectionList from './MenuSectionList'
+import MenuOneCoure from './MenuOneCourse'
+import MenuThreeCoure from './MenuThreeCourse'
+import {MenuTypes} from '../../enums/menuType'
 
-export default (props: any) => {
-    const updatePanel = (menu: any) => {
-        props.updateState('weddingMenus', menu);
-    }
-
+const MenusView = (props: any) => {
     return (
         <div >
             <h1>Choose Your Menu</h1>
             <div className="row">
                 <div className="col-md-4">
-                    {
-                        weddingMenu(null).map((menus: any) => {
-                            return (
-                                <div>
-                                    <div key={menus.title}>{menus.title}</div>
-                                    {
-                                        menus.items.map((menu: any) => {
-                                            return(
-                                                <div key={menu.name} className="radio">
-                                                    <label>
-                                                        <input type="radio" name={menus.typeName} value={menu.name} />
-                                                        <a onClick={(e) => {updatePanel(menu)}}>{menu.name}</a>
-                                                    </label>
-                                                </div>
-                                            )
-                                        })
-                                    }
-                                </div>
-                            )
-                        })
-                    }
+                    <div className="panel-group" id="accordion">
+                        {
+                            props.allMenus && props.allMenus.map(function(menu:any, index:number){
+                                return(
+                                    <MenuSectionList key={index}
+                                        menu = {menu} />
+                                )
+                            })
+                        }
+                    </div>
                 </div>
                 <div className="col-md-8">
-                    {props.chosenMenu &&
-                    <div className="panel panel-default" >
-                        <div className="panel-body menu">
-                            <h3 className="menu">{props.chosenMenu.name} <span className="badge">Price per head: £{props.chosenMenu.pricePerHead}</span></h3>
-                            <div className="row">
-                                <div className="col-md-4">
-                                    <img className="img-responsive img-circle" src={props.chosenMenu.imageUrl}/>
-                                </div>
-                                <div className="col-md-8">&nbsp;</div>
-                            </div>
-                            {/*Starters*/}
-                            {
-                                props.chosenMenu.menu.starters &&
-                                <h4 className="menu">
-                                    {props.chosenMenu.menu.starters.title}
-                                </h4>
-                            }
-                            <div className="list-group">
-                                {
-                                    props.chosenMenu.menu.starters &&
-                                    props.chosenMenu.menu.starters.items.map((starters: any) => {
-                                        return(
-                                            <a href="#" className="list-group-item">
-                                                <h5 className="list-group-item-heading menu">{starters.title}</h5>
-                                                <p className="list-group-item-text menu-description">{starters.subText}</p>
-                                            </a>
-                                        )
-                                    })
-                                }
-                            </div>
-                            {/*Main*/}
-                            {
-                                props.chosenMenu.menu.main &&
-                                <h4 className="menu">
-                                    {props.chosenMenu.menu.main.title}
-                                </h4>
-                            }
-                            <div className="list-group">
-                                {
-                                    props.chosenMenu.menu.main &&
-                                    props.chosenMenu.menu.main.items.map((m: any) => {
-                                        return(
-                                            <a href="#" className="list-group-item">
-                                                <h5 className="list-group-item-heading menu">{m.title}</h5>
-                                                <p className="list-group-item-text menu-description">{m.subText}</p>
-                                            </a>
-                                        )
-                                    })
-                                }
-                            </div>
-                            {/*Desert*/}
-                            {
-                                props.chosenMenu.menu.desserts &&
-                                <h4 className="menu">
-                                    {props.chosenMenu.menu.desserts.title}
-                                </h4>
-                            }
-                            <div className="list-group">
-                                {
-                                    props.chosenMenu.menu.desserts &&
-                                    props.chosenMenu.menu.desserts.items.map((dessert: any) => {
-                                        return(
-                                            <a href="#" className="list-group-item">
-                                                <h5 className="list-group-item-heading menu">{dessert.title}</h5>
-                                                <p className="list-group-item-text menu-description">{dessert.subText}</p>
-                                            </a>
-                                        )
-                                    })
-                                }
-                            </div>
-                        </div>
-                    </div>
+                    {
+                        props.selectedMenu && props.selectedMenu.menuType === MenuTypes.ONE_COURSE && <MenuOneCoure />
+                    }
+                    {
+                        props.selectedMenu && props.selectedMenu.menuType === MenuTypes.THREE_COURSE && <MenuThreeCoure />
                     }
                 </div>
+            </div>
+            <div>
+                <button type="button" className="btn btn-outline-light" 
+                    onClick={e => {props.setPreviousStepAction()}}>
+                    &lt; &lt; Chosen Package
+                </button>
+                <button type="button" 
+                    className="btn btn-outline-secondary" 
+                    onClick={e => {props.setNextStepAction()}}>
+                    Cost Summary &gt; &gt;
+                </button>
             </div>
         </div>
     )
 }
+
+const makeMapStateToProps = () => {
+    const getAllMenus = makeGetAllMenus();
+    const getSelectedMenu = makeGetselectedMenu();
+    const mapStateToProps = (state: any, props: any) => {
+        return {
+            allMenus: getAllMenus(state, props),
+            selectedMenu: getSelectedMenu(state, props)
+        };
+    }
+    return mapStateToProps;
+}
+
+const makeMapDispatchToProps = {
+    setNextStepAction: setNextStep,
+    setPreviousStepAction: setPreviousStep
+}
+
+export default connect(makeMapStateToProps, makeMapDispatchToProps)(MenusView);

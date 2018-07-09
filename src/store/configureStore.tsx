@@ -9,7 +9,8 @@ import {persistTokenMiddleware} from './customMiddleware/persistTokenMiddleware'
 
 
 export default (initialState: any) => {
-  const middlewares = [thunk, promise(), createLogger(), persistTokenMiddleware];
+  const middlewares = [thunk, promise(), createLogger()];
+  // const middlewares = [thunk, promise(), createLogger(), persistTokenMiddleware];
   //below includes the initial state which has the token, I think this was causing an error.
   // const store = createStore(rootReducer, initialState, applyMiddleware(...middlewares));
   const store = createStore(rootReducer, applyMiddleware(...middlewares));

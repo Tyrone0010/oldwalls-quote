@@ -2,9 +2,8 @@ interface IQuoteForm{
     firstName: string,
     lastName: string,
     houseNumberName: string,
-    addressLine1: string,
+    streetName: string,
     addressLine2: string,
-    addressLine3: string,
     townCity: string,
     postcode: string,
     email: string,
@@ -16,5 +15,26 @@ interface IQuoteForm{
     childNumbers: number
 }
 
+class QuoteForm implements IQuoteForm {
+    firstName: '';
+    lastName: '';
+    houseNumberName: '';
+    streetName: '';
+    addressLine2: '';
+    townCity: '';
+    postcode: '';
+    email: '';
+    telephoneHome: '';
+    telephoneMobile: '';
+    adultNumbers: 0;
+    teenNumbers: 0;
+    eveningNumbers: 0;
+    childNumbers: 0;
 
-export {IQuoteForm}
+    constructor(){
+        
+    }
+}
+
+
+export {IQuoteForm, QuoteForm}
