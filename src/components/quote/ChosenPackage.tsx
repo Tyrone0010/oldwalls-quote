@@ -1,10 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Dispatch } from "redux";
-import {weddingPackage} from '../../../content/data/packages';
 import {calculatePackage} from '../../actions/package';
 import {makeGetChosenPackage, makeGetIsChosenPackageLoaded} from '../../selectors/chosenPackageSelector';
-import { IChosenPackage } from '../../interfaces/IChosenPackage';
 import VenuesDropDown from './VenuesDropDown'
 import {makeGetSelectedVenue} from '../../selectors/venuesSelector';
 import {setNextStep, setPreviousStep} from '../../actions/wizard'
@@ -53,7 +50,7 @@ const ChosenPackage = (props: any) => {
                     <div className="form-group">
                         {chosenPackage &&
                         <div>
-                            The date chosen falls into our <b>{chosenPackage.name}</b> in the <b>{'chosenPackage.Season'}</b> on
+                            The date chosen falls into our <b>{chosenPackage.name}</b> in the <b>{chosenPackage.season}</b> on
                             a {chosenPackage.dayOfWeek} and starts at <b>£{chosenPackage.price}.00</b>
                             <img className="img-responsive img-circle" src="content/images/ultimate-castle.jpg"/>
                         </div>

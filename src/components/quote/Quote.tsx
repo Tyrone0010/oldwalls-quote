@@ -8,8 +8,7 @@ import Feedback from './Feedback';
 import GuestNumbers from './GuestNumbers';
 import ChosenPackage from './ChosenPackage';
 import Menus from './Menus';
-import {validateCustomerDetails, validateCustomerNumbers} from '../../utilities/validation/quote';
-import CostSummary from './CostSummary';
+import CostSummary from './QuoteSummary';
 import {makeGetWizardStepIndex} from '../../selectors/quote'
 
 class Quote extends React.Component<any, any>{
@@ -154,39 +153,6 @@ class Quote extends React.Component<any, any>{
         }
     }
 
-    validateCustomerNumbersfunc = () => {
-        const customerValidationResult = validateCustomerNumbers(
-            this.state.adultNumbers, this.state.childNumbers,
-            this.state.teenNumbers, this.state.eveningNumbers);
-            if(customerValidationResult){
-                let errors = this.state.errorCollection;
-                //we know the keys so just add or update
-                if(customerValidationResult.adultNumbers){
-                    errors.adultNumbers = customerValidationResult.adultNumbers;
-                }
-                if(customerValidationResult.childNumbers){
-                    errors.childNumbers = customerValidationResult.childNumbers;
-                }
-                if(customerValidationResult.teenNumbers){
-                    errors.teenNumbers = customerValidationResult.teenNumbers;
-                }
-                if(customerValidationResult.eveningNumbers){
-                    errors.eveningNumbers = customerValidationResult.eveningNumbers;
-                }
-                this.setState({errorCollection: errors});
-                return false;
-            }else{
-                let errors = this.state.errorCollection;
-                delete errors["adultNumbers"];
-                delete errors["childNumbers"];
-                delete errors["teenNumbers"];
-                delete errors["eveningNumbers"];
-                this.setState({ errorCollection: errors });
-                return true;
-            }
-    
-    }
-
     render(){
         return (
             <div>
@@ -209,15 +175,7 @@ class Quote extends React.Component<any, any>{
                     />
                 }
                 {this.props.wizardStepIndex===4 &&
-                    <GuestNumbers
-                        updateState={this.updateState}
-                        adultNumbers={this.state.adultNumbers}
-                        childNumbers={this.state.childNumbers}
-                        teenNumbers={this.state.teenNumbers}
-                        eveningNumbers={this.state.eveningNumbers}
-                        errorCollection={this.state.errorCollection}
-                        validateCustomerNumbers={this.validateCustomerNumbersfunc}
-                    />
+                    <GuestNumbers />
                 }
                 {this.props.wizardStepIndex===5 &&
                     <ChosenPackage

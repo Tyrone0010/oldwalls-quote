@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from "redux";
+import {calculateQuote} from '../../actions/quote';
 import {setNextStep, setPreviousStep} from '../../actions/wizard'
 import {makeGetAllMenus} from '../../selectors/menusSelector';
 import {makeGetselectedMenu} from '../../selectors/menuSectionsSelector'
@@ -10,6 +11,10 @@ import MenuThreeCoure from './MenuThreeCourse'
 import {MenuTypes} from '../../enums/menuType'
 
 const MenusView = (props: any) => {
+    const setNextStep = () => {
+        props.calculateQuoteAction(props.setNextStepAction);
+    }
+
     return (
         <div >
             <h1>Choose Your Menu</h1>
@@ -42,7 +47,7 @@ const MenusView = (props: any) => {
                 </button>
                 <button type="button" 
                     className="btn btn-outline-secondary" 
-                    onClick={e => {props.setNextStepAction()}}>
+                    onClick={e => {setNextStep()}}>
                     Cost Summary &gt; &gt;
                 </button>
             </div>
@@ -64,7 +69,8 @@ const makeMapStateToProps = () => {
 
 const makeMapDispatchToProps = {
     setNextStepAction: setNextStep,
-    setPreviousStepAction: setPreviousStep
+    setPreviousStepAction: setPreviousStep,
+    calculateQuoteAction: calculateQuote
 }
 
 export default connect(makeMapStateToProps, makeMapDispatchToProps)(MenusView);

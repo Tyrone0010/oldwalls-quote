@@ -1,3 +1,5 @@
+import {IQuoteSummaryModel, QuoteSummaryModel} from './IQuoteSummaryModel';
+
 interface IQuoteForm{
     firstName: string,
     lastName: string,
@@ -12,7 +14,10 @@ interface IQuoteForm{
     adultNumbers: number,
     teenNumbers: number,
     eveningNumbers: number,
-    childNumbers: number
+    childNumbers: number,
+    isCalculationRequired: boolean,
+    calculationRequested: boolean,
+    quoteSummary: IQuoteSummaryModel
 }
 
 class QuoteForm implements IQuoteForm {
@@ -30,9 +35,12 @@ class QuoteForm implements IQuoteForm {
     teenNumbers: 0;
     eveningNumbers: 0;
     childNumbers: 0;
+    isCalculationRequired: true;
+    calculationRequested: false;
+    quoteSummary: IQuoteSummaryModel;
 
     constructor(){
-        
+        this.quoteSummary = new QuoteSummaryModel();
     }
 }
 

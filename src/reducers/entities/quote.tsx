@@ -27,6 +27,7 @@ const addCustomer = (quote:any, customer:any) => {
     quote.customers = [];
   }
   quote.customers.push(customer);
+  quote.customerCount = quote.customers ? quote.customers.length : 0;
 }
 
 const addUpdateCustomerAddress = (quote:any, customerAddress: IQuoteForm) => {

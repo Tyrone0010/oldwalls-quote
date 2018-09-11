@@ -4,6 +4,6 @@ import {ROOT_URL} from './api';
 export const getVenues = () => {
     return axios({
         method: 'GET',
-        url: ROOT_URL + 'api/venues/',
+        url: ROOT_URL + 'api/venues',
     });
 }

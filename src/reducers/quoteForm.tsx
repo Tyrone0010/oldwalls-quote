@@ -1,14 +1,15 @@
-import { combineReducers } from 'redux';
 import {
 	UPDATE_CONTACT, UPDATE_CUSTOMERS, UPDATE_NUMBERS, RESET_FORM, UPDATE_QUOTE_FORM_FIELD
 } from '../constants/quoteForm';
+import {CALCULATE_QUOTE_FAILURE, CALCULATE_QUOTE_REQUEST, CALCULATE_QUOTE_SUCCESS} from '../constants/quoteForm'
 import {IQuoteForm, QuoteForm} from '../interfaces/IQuoteForm';
+import { MenuSummaryModel, IMenuSummaryModel } from '../interfaces/IMenuSummaryModel';
 
 const INITIAL_STATE:IQuoteForm = new QuoteForm();
 
 
 const quoteForm = (state = INITIAL_STATE, action: any) => {
-    let newState;
+    let newState:IQuoteForm;
 
 	switch(action.type){
   		case UPDATE_CONTACT:
@@ -19,9 +20,27 @@ const quoteForm = (state = INITIAL_STATE, action: any) => {
   		case UPDATE_QUOTE_FORM_FIELD:
           newState = {...state};
           updateFormField(newState, action.fieldName, action.fieldValue)
+          return newState;
         case RESET_FORM:
-  			return newState;
-
+              return newState;
+        case CALCULATE_QUOTE_REQUEST:
+            newState = {...state};
+            newState.calculationRequested = true;
+            return newState;
+        case CALCULATE_QUOTE_SUCCESS:
+            newState = INITIAL_STATE;
+            newState.calculationRequested = false;
+            newState.quoteSummary.venueName = action.data.venueName;
+            newState.quoteSummary.venuePrice = action.data.venuePrice;
+            newState.quoteSummary.totalPrice = action.data.totalPrice;
+            action.data.menus.forEach((menu:any) => {
+                var menuVm:IMenuSummaryModel = new MenuSummaryModel();
+                menuVm.menuName = menu.menuName;
+                menuVm.price = menu.price;
+                menuVm.sectionName = menu.sectionName;
+                newState.quoteSummary.menuSummaries.push(menuVm)
+            });
+            return newState;
 		default:
 			return state;
 	}
@@ -29,6 +48,18 @@ const quoteForm = (state = INITIAL_STATE, action: any) => {
 
 const updateFormField = (state:any, fieldName:string, fieldValue:any) => {
     switch(fieldName){
+        case "adultNumbers":
+            state.adultNumbers = fieldValue
+            break;
+        case "childNumbers":
+            state.childNumbers = fieldValue
+            break;
+        case "teenNumbers":
+            state.teenNumbers = fieldValue
+            break;
+        case "eveningNumbers":
+            state.eveningNumbers = fieldValue
+            break;
         case "houseNameNumber":
             state.houseNameNumber = fieldValue
             break;
@@ -57,5 +88,6 @@ const updateFormField = (state:any, fieldName:string, fieldValue:any) => {
             break;
     }
 }
+
 
 export {quoteForm}

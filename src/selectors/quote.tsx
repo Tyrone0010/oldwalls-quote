@@ -9,11 +9,15 @@ const customers = (state:any, props:any) =>{
 }
 
 const customerCount = (state:any, props:any) =>{
-    if(state.quote.customers){
-        return state.quote.customers.length;
+    if(state.quote.customerCount){
+        return state.quote.customerCount;
     }else{
         return 0;
     }
+}
+
+const quoteSummary = (state:any, props:any) => {
+    return state.quoteForm.quoteSummary;
 }
 
 export const makeGetWizardStepIndex= () => {
@@ -33,6 +37,24 @@ export const makeGetCustomers= () => {
                 customers: customers,
                 customerCount: customerCount
             };
+        }
+    )
+}
+
+export const makeGetCustomerCount= () => {
+    return createSelector(
+        [customerCount],
+        (customerCount: number) => {
+            return  customerCount;
+        }
+    )
+}
+
+export const makeGetQuoteSummary= () => {
+    return createSelector(
+        [quoteSummary],
+        (quoteSummary: any) => {
+            return  quoteSummary;
         }
     )
 }

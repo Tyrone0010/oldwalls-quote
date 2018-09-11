@@ -5,9 +5,8 @@ import App from '../App';
 import {addCustomer} from '../../actions/quote'
 import {validateCustomer} from '../../utilities/validation/quote';
 import {setNextStep, setPreviousStep} from '../../actions/wizard';
-import {makeGetWizardStepIndex, makeGetCustomers} from '../../selectors/quote'
+import {makeGetWizardStepIndex, makeGetCustomers, makeGetCustomerCount} from '../../selectors/quote'
 
-//THIS NEEDS TO BE A CLASS AS I NEED A LOCAL STATE FOR THE FORM FIELDS
 class Customers extends React.Component<any, any>{
 
     constructor(props:any){
@@ -71,6 +70,11 @@ class Customers extends React.Component<any, any>{
     
                 </div>
                 <div className="row">
+                    <div className='form-group col-md-3'>
+                    Customer count: {this.props.customerCount}
+                    </div>
+                </div>
+                <div className="row">
                     <div className={`form-group col-md-3 ${this.errorClass('firstNameError')}`}>
                         <label htmlFor="firstName" className="control-label">First Name</label>
                         <input id="firstName" value={this.state.firstName} 
@@ -106,9 +110,11 @@ class Customers extends React.Component<any, any>{
 
 const makeMapStateToProps = () => {
     const getCustomers = makeGetCustomers();
+    const getCustomerCount = makeGetCustomerCount();
     const mapStateToProps = (state:any, props:any) => {
         return {
-            customersObj: getCustomers(state, props)
+            customersObj: getCustomers(state, props),
+            customerCount: getCustomerCount(state, props)
         };
     }
     return mapStateToProps;

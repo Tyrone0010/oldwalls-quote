@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Dispatch } from "redux";
-import MenuSection from './MenuSection'
-import {setSelectedMenuSection} from '../../actions/menus'
-import {makeGetSelectedMenus, makeGetMenuSections, makeGetAllMenuSections} from '../../selectors/menuSectionsSelector';
+import {makeGetQuoteSummary} from '../../selectors/quote';
 import {makeGetAllMenus} from '../../selectors/menusSelector'
 import {setNextStep, setPreviousStep} from '../../actions/wizard'
+import { IMenuSummaryModel } from '../../interfaces/IMenuSummaryModel';
+import NumberFormat from 'react-number-format';
 
-const CostSummary = (props: any) => {
+const QuoteSummary = (props: any) => {
     const getSelectedMenuDetail = (selectedMenu:any) => {
         var menuDetail:any = {};
         props.allMenus.forEach((menu: any) => {
@@ -26,28 +25,46 @@ const CostSummary = (props: any) => {
     return (
         <div>
             <h1>Congratulations</h1>
-            <strong>{}</strong>
             <div>It’s time to start getting excited about your wedding booking</div>
             <strong>Save the date: {}</strong>
             <hr/>
+            <h5>Your wedding venue is</h5>
+            <div><strong>{props.quoteSummary.venueName}</strong> and the venue cost is 
+                <NumberFormat 
+                    value={props.quoteSummary.venuePrice} 
+                    displayType={'text'} 
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    prefix={'£'} renderText={value => <strong> {value}</strong>} />
+            </div>
+            <hr/>
             <h5>Your wedding package includes</h5>
             {
-                Object.keys(props.selectedMenus).map((menu: any) => {
-                    var menuDetail = getSelectedMenuDetail(props.selectedMenus[menu]);
+                props.quoteSummary.menuSummaries.map((menu: IMenuSummaryModel, index:number) => {
                     return(
-                        <div className="row">
+                        <div className="row" key={`menuSummary${index}`} >
                             <div className="col-xs-8">
-                                {menuDetail.name} - {menuDetail.sectionName}
+                                {menu.menuName} - {menu.sectionName}
                             </div>
-                            <div className="col-xs-4">
-                                £{menuDetail.price}
-                            </div>
+                            <NumberFormat 
+                                value={menu.price} 
+                                displayType={'text'} 
+                                decimalScale={2}
+                                fixedDecimalScale={true}
+                                prefix={'£'} renderText={value => <div className="col-xs-4"> {value}</div>} />
                         </div>
                     )
                 })
             }
             <hr/>
-            <div>Total cost:</div>
+            <div>Total cost:
+                <NumberFormat 
+                    value={props.quoteSummary.totalPrice} 
+                    displayType={'text'} 
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                    prefix={'£'} renderText={value => <strong>{value}</strong>} />
+            </div>
             <div>Your wedding booking co-ordinator is {} who you can call on {}</div>
             <h3><u>THE NEXT STEPS</u></h3>
             <div>
@@ -62,14 +79,10 @@ const CostSummary = (props: any) => {
 }
 
 const makeMapStateToProps = () => {
-    const getSelectedMenus = makeGetSelectedMenus();
-    const getAllMenus = makeGetAllMenus();
-    const getAllMenuSections = makeGetAllMenuSections();
+    const getQuoteSummary = makeGetQuoteSummary();
     const mapStateToProps = (state: any, props: any) => {
         return {
-            selectedMenus: getSelectedMenus(state, props),
-            allMenus: getAllMenus(state, props),
-            allMenuSections: getAllMenuSections(state, props)
+            quoteSummary: getQuoteSummary(state, props),
         };
     }
     return mapStateToProps;
@@ -80,5 +93,5 @@ const makeMapDispatchToProps = {
     setPreviousStepAction: setPreviousStep
 }
 
-export default connect(makeMapStateToProps, makeMapDispatchToProps)(CostSummary);
+export default connect(makeMapStateToProps, makeMapDispatchToProps)(QuoteSummary);
 

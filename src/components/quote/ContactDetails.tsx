@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { connect } from "react-redux";
-import {addCustomerAddress} from '../../actions/quote';
 import {updateFormField} from '../../actions/quoteForm';
 import {validateCustomerDetails} from '../../utilities/validation/quote';
 import {setNextStep, setPreviousStep} from '../../actions/wizard';
 import {IQuoteForm} from '../../interfaces/IQuoteForm';
 import {makeGetContactDetails} from '../../selectors/quoteFormSelector'
+
 
 class ContactDetails extends React.Component<any, any>{
 
@@ -30,7 +30,7 @@ class ContactDetails extends React.Component<any, any>{
             this.setState({errors: errors});
         }else{
             let errors = {};
-            this.props.setPreviousStepAction()
+            this.props.setNextStepAction()
         }
     }
 
@@ -131,7 +131,6 @@ const makeMapStateToProps = () => {
 const makeMapDispatchToProps = {
     setNextStepAction: setNextStep,
     setPreviousStepAction: setPreviousStep,
-    addCustomerAddressAction: addCustomerAddress,
     updateFormFieldAction: updateFormField
 }
 
