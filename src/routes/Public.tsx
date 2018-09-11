@@ -4,7 +4,7 @@ import QuotePage from '../pages/Quote';
 import GalleryPage from '../pages/Gallery';
 import LoginPage from '../pages/Login';
 import {Route, Switch, Redirect} from 'react-router-dom';
-import {PrivateRoute} from './auth/PrivateRoute';
+import {PrivateRoute} from '../components/authentication/PrivateRoute';
 
 export default (
     <Switch>

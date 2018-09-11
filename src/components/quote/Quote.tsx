@@ -1,65 +1,48 @@
 import * as React from 'react';
-import StaffDetail from './StaffDetail';
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
+import QuoteSearchList from './QuoteSearchList';
 import Customers from './Customers';
 import ContactDetails from './ContactDetails';
 import Feedback from './Feedback';
 import GuestNumbers from './GuestNumbers';
 import ChosenPackage from './ChosenPackage';
 import Menus from './Menus';
-import Quotation from './Quotation';
-import {weddingMenu} from '../../../content/data/menus';
+import CostSummary from './QuoteSummary';
+import {makeGetWizardStepIndex} from '../../selectors/quote'
 
-
-export default class Quote extends React.Component<any, any>{
+class Quote extends React.Component<any, any>{
     constructor(props: any){
         super(props);
         this.state = {
-            index: 0,
             pages: [
                 {
                     title: "Staff Detail",
-                    nextButton: "Customers >>"
                 },
                 {
                     title: "Customer(s)",
-                    backButton: "<< Staff Detail",
-                    nextButton: "Contact Details >>"
                 },
                 {
                     title: "Contact Details",
-                    backButton: "<< Customer(s)",
-                    nextButton: "Feedback >>"
                 },
                 {
                     title: "Feedback",
-                    backButton: "<< Contact Details",
-                    nextButton: "Guest Numbers >>"
                 },
                 {
                     title: "Guest Numbers",
-                    backButton: "<< Feedback",
-                    nextButton: "Packages >>"
                 },
                 {
                     title: "Packages",
-                    backButton: "<< Guest Numbers",
-                    nextButton: "Menus >>"
                 },
                 {
                     title: "Menus",
-                    backButton: "<< Packages",
-                    nextButton: "Quote >>"
                 },
                 {
                     title: "Quote",
-                    backButton: "<< Menus",
-                    //nextButton: "Next >>"
                 },
             ],
             meetingDate: {},
             staffMember: "",
-            firstName: "",
-            surname: "",
             houseNameNumber:"",
             street:"",
             address2:"",
@@ -78,7 +61,8 @@ export default class Quote extends React.Component<any, any>{
             customerNames: [],
             chosenPackage: null,
             weddingMenus: {keys:[]},
-            chosenMenu: ""
+            chosenMenu: "",
+            errorCollection: {}
         };
 
     }
@@ -90,12 +74,6 @@ export default class Quote extends React.Component<any, any>{
                 break;
             case "staffMember":
                 this.setState({ staffMember: value });
-                break;
-            case "firstName":
-                this.setState({ firstName: value });
-                break;
-            case "surname":
-                this.setState({ surname: value });
                 break;
             case "houseNameNumber":
                 this.setState({ houseNameNumber: value });
@@ -167,102 +145,67 @@ export default class Quote extends React.Component<any, any>{
                     this.setState({weddingMenus : weddingMenusCopy});
                 }
                 break;
+            case "errorCollection": 
+                this.setState({errorCollection : value});
+                break;
             default:
                 break;
         }
     }
 
-    addCustomer = () => {
-        let list = [...this.state.customerNames, { firstName: this.state.firstName, surname: this.state.surname}];
-        this.setState({ firstName: "" });
-        this.setState({ surname: "" });
-        this.setState({ customerNames: list });
-    }
-
     render(){
         return (
             <div>
-                {this.state.index===0 &&
-                    <StaffDetail updateState={this.updateState}
+                {this.props.wizardStepIndex  === 0 &&
+                    <QuoteSearchList updateState={this.updateState}
                                  meetingDate={this.state.meetingDate}
                                  staffMember={this.state.staffMember}
                     />}
-                {this.state.index===1 &&
-                    <Customers
-                        updateState={this.updateState}
-                        addCustomer={this.addCustomer}
-                        firstName={this.state.firstName}
-                        surname={this.state.surname}
-                        customerNames={this.state.customerNames}
-                    />
+                {this.props.wizardStepIndex===1 &&
+                    <Customers />
                 }
-                {this.state.index===2 &&
-                    <ContactDetails
-                        updateState={this.updateState}
-                        houseNameNumber={this.state.houseNameNumber}
-                        street={this.state.street}
-                        address2={this.state.address2}
-                        townCity={this.state.townCity}
-                        postcode={this.state.postcode}
-                        email={this.state.email}
-                        telephoneHome={this.state.telephoneHome}
-                        telephoneMobile={this.state.telephoneMobile}
-                    />
+                {this.props.wizardStepIndex===2 &&
+                    <ContactDetails  />
                 }
-                {this.state.index===3 &&
+                {this.props.wizardStepIndex===3 &&
                     <Feedback
                         updateState={this.updateState}
                         hearAboutUs={this.state.hearAboutUs}
                         hearAboutShowcase={this.state.hearAboutShowcase}
                     />
                 }
-                {this.state.index===4 &&
-                    <GuestNumbers
-                        updateState={this.updateState}
-                        adultNumbers={this.state.adultNumbers}
-                        childNumbers={this.state.childNumbers}
-                        teenNumbers={this.state.teenNumbers}
-                        eveningNumbers={this.state.eveningNumbers}
-                    />
+                {this.props.wizardStepIndex===4 &&
+                    <GuestNumbers />
                 }
-                {this.state.index===5 &&
+                {this.props.wizardStepIndex===5 &&
                     <ChosenPackage
                         updateState={this.updateState}
-                        weddingDate={this.state.weddingDate}
-                        chosenPackage={this.state.chosenPackage}
                     />
                 }
-                {this.state.index===6 &&
+                {this.props.wizardStepIndex===6 &&
                 <Menus
                     updateState={this.updateState}
-                    weddingMenu={weddingMenu}
-                    chosenMenu={this.state.weddingMenus[this.state.chosenMenu]}
                 />
                 }
-                {this.state.index===7 &&
-                <Quotation
-                    customerNames={this.state.customerNames}
-                    weddingDate={this.state.weddingDate}
-                    staffMember={this.state.staffMember}
-                    weddingPackage={this.state.chosenPackage}
-                    weddingMenus={this.state.weddingMenus}
-                    adultNumbers={this.state.adultNumbers}
-                    childNumbers={this.state.childNumbers}
-                    teenNumbers={this.state.teenNumbers}
-                    eveningNumbers={this.state.eveningNumbers}
-                />
-                }
-                {   this.state.pages[this.state.index].backButton &&
-                    <button type="button" className="btn btn-outline-light" onClick={e => {this.setState({index: this.state.index - 1})}}>
-                        {this.state.pages[this.state.index].backButton}
-                    </button>
-                }
-                {   this.state.pages[this.state.index].nextButton &&
-                    <button type="button" className="btn btn-outline-secondary" onClick={e => {this.setState({index: this.state.index + 1})}}>
-                        {this.state.pages[this.state.index].nextButton}
-                    </button>
+                {this.props.wizardStepIndex===7 &&
+                    <CostSummary />
                 }
             </div>
         )
     }
 }
+
+const makeMapStateToProps = () => {
+    const getWizardStepIndex = makeGetWizardStepIndex();
+    const mapStateToProps = (state: any, props: any) => {
+        return {
+            wizardStepIndex: getWizardStepIndex(state, props),
+        };
+    }
+    return mapStateToProps;
+}
+
+const makeMapDispatchToProps = {
+}
+
+export default connect(makeMapStateToProps, makeMapDispatchToProps)(Quote);

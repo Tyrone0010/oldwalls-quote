@@ -2,12 +2,17 @@ import * as React  from 'react';
 import {Component} from 'react';
 import QuoteView from '../components/quote/QuoteView';
 import Quote from '../components/quote/Quote';
+import {getUserVenues} from '../actions/venues'
+import { connect } from 'react-redux'
 
-
-export default class QuotePage extends React.Component<any, any>{
+class QuotePage extends React.Component<any, any>{
 
     constructor (props: any){
         super(props);
+    }
+
+    componentWillMount(){
+        this.props.getUserVenues();
     }
 
     render() {
@@ -18,3 +23,13 @@ export default class QuotePage extends React.Component<any, any>{
         )
     }
 }
+
+const makeMapStateToProps = () => {
+    const mapStateToProps = (state:any, props:any) => {
+        return {
+        };
+    }
+    return mapStateToProps;
+}
+
+export default connect(makeMapStateToProps, {getUserVenues})(QuotePage);

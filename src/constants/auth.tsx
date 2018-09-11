@@ -1,0 +1,9 @@
+export const SIGN_IN = 'SIGN_IN';
+export const SIGN_OUT = 'SIGN_OUT';
+export const SIGNING_IN = 'SIGNING_IN';
+export const SIGNING_OUT = 'SIGNING_OUT';
+export const SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS'
+export const SIGN_IN_FAILURE = 'SIGN_IN_FAILURE'
+export const TOKEN_INIT = 'TOKEN_INIT';
+export const TOKEN_RECEIVE = 'TOKEN_RECEIVE';
+export const VERIFY_TOKEN = 'VERIFY_TOKEN';

@@ -1,6 +1,16 @@
 import * as React from 'react';
+import { connect } from "react-redux";
+import {setNextStep, setPreviousStep} from '../../actions/wizard'
 
-export default (props: any) => {
+const Feedback = (props: any) => {
+    const update = (name: string, value: string) => {
+        if(value==='forward'){
+            props.updateState(name, value);
+        }else{
+            props.updateState(name, value);
+        }
+    };
+
     return (
         <div>
             <h1>Feedback</h1>
@@ -18,6 +28,33 @@ export default (props: any) => {
                               onChange={e => props.updateState("hearAboutShowcase", e.target.value)}/>
                 </div>
             </div>
+            <div>
+                <button type="button" className="btn btn-outline-light" 
+                    onClick={e => {props.setPreviousStepAction()}}>
+                    &lt; &lt; Contact Details
+                </button>
+                <button type="button" 
+                    className="btn btn-outline-secondary" 
+                    onClick={e => {props.setNextStepAction()}}>
+                    Guest Numbers &gt; &gt;
+                </button>
+            </div>
+
         </div>
     )
 }
+
+const makeMapStateToProps = () => {
+    const mapStateToProps = (state:any, props:any) => {
+        return {
+        };
+    }
+    return mapStateToProps;
+};
+
+const makeMapDispatchToProps = {
+    setNextStepAction: setNextStep,
+    setPreviousStepAction: setPreviousStep
+}
+
+export default  connect(makeMapStateToProps, makeMapDispatchToProps)(Feedback);

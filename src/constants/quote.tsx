@@ -1,0 +1,7 @@
+export const RESET_QUOTE = 'RESET_QUOTE';
+export const ADD_CUSTOMER = 'ADD_CUSTOMER';
+export const ADD_CUSTOMER_ADDRESS = 'ADD_CUSTOMER_ADDRESS';
+
+//Wizard Steps
+export const WIZARD_STEP_NEXT = 'WIZARD_STEP_NEXT';
+export const WIZARD_STEP_PREVIOUS = 'WIZARD_STEP_PREVIOUS';
