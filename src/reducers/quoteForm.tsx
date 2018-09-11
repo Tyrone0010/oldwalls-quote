@@ -33,6 +33,8 @@ const quoteForm = (state = INITIAL_STATE, action: any) => {
             newState.quoteSummary.venueName = action.data.venueName;
             newState.quoteSummary.venuePrice = action.data.venuePrice;
             newState.quoteSummary.totalPrice = action.data.totalPrice;
+            newState.quoteSummary.weddingDate = action.data.weddingDate;
+            
             action.data.menus.forEach((menu:any) => {
                 var menuVm:IMenuSummaryModel = new MenuSummaryModel();
                 menuVm.menuName = menu.menuName;
