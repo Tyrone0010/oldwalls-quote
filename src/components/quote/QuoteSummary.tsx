@@ -5,6 +5,7 @@ import {makeGetAllMenus} from '../../selectors/menusSelector'
 import {setNextStep, setPreviousStep} from '../../actions/wizard'
 import { IMenuSummaryModel } from '../../interfaces/IMenuSummaryModel';
 import NumberFormat from 'react-number-format';
+import Moment from 'react-moment';
 
 const QuoteSummary = (props: any) => {
     const getSelectedMenuDetail = (selectedMenu:any) => {
@@ -26,7 +27,7 @@ const QuoteSummary = (props: any) => {
         <div>
             <h1>Congratulations</h1>
             <div>It’s time to start getting excited about your wedding booking</div>
-            <strong>Save the date: {}</strong>
+            <strong>Save the date: <Moment>{props.quoteSummary.weddingDate}</Moment></strong>
             <hr/>
             <h5>Your wedding venue is</h5>
             <div><strong>{props.quoteSummary.venueName}</strong> and the venue cost is 

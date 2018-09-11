@@ -4,6 +4,7 @@ interface IQuoteSummaryModel{
     venueName: string,
     venuePrice: number,
     totalPrice: number,
+    weddingDate: string,
     menuSummaries: IMenuSummaryModel[],
 }
 
@@ -12,6 +13,7 @@ class QuoteSummaryModel implements IQuoteSummaryModel {
     venuePrice: 0;
     totalPrice: 0;
     menuSummaries: MenuSummaryModel[] = [];
+    weddingDate: '01/01/2000';
     
     constructor(){
     }
