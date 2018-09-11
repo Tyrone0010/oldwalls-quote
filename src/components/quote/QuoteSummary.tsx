@@ -27,7 +27,7 @@ const QuoteSummary = (props: any) => {
         <div>
             <h1>Congratulations</h1>
             <div>It’s time to start getting excited about your wedding booking</div>
-            <strong>Save the date: <Moment>{props.quoteSummary.weddingDate}</Moment></strong>
+            <strong>Save the date: <Moment format='dddd MMMM DD YYYY'>{props.quoteSummary.weddingDate}</Moment></strong>
             <hr/>
             <h5>Your wedding venue is</h5>
             <div><strong>{props.quoteSummary.venueName}</strong> and the venue cost is 
