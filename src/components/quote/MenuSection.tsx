@@ -7,7 +7,8 @@ const MenuSection = (props: any) => {
     const isMenuSelected = (sectionId: number) => {
         var returnValue = false;
         Object.keys(props.selectedMenus).map((selectedMenu:any) => {
-            if(selectedMenu.id === sectionId){
+            //object keys are aleways of type string 
+            if(selectedMenu == sectionId){
                 returnValue = true;
             }
         })
