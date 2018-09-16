@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment'
 import {calculatePackage} from '../../actions/package';
 import {makeGetChosenPackage, makeGetIsChosenPackageLoaded} from '../../selectors/chosenPackageSelector';
 import VenuesDropDown from './VenuesDropDown'
@@ -28,7 +29,8 @@ const ChosenPackage = (props: any) => {
         props.calculatePackageAction(date, 1);
     }
 
-    const weddingDate = new Date(props.weddingDate);
+    const weddingDate = (!chosenPackage || !chosenPackage.date) ? new Date(): new Date(chosenPackage.date);
+    const weddingDateString = moment(weddingDate).format('YYYY/MM/DD')
     return (
         <div>
             <h1>Packages</h1>
@@ -43,14 +45,14 @@ const ChosenPackage = (props: any) => {
                         props.selectedVenue && props.selectedVenue > -1 &&
                         <div className="form-group">
                             <label htmlFor="proposedDate">Choose Your Date</label>
-                            <input id="proposedDate" defaultValue={props.weddingDate} className="form-control" type="date"
+                            <input id="proposedDate" defaultValue={weddingDateString} className="form-control" type="date"
                                 onChange={e => setPackage(e.target.value)}/>
                         </div>
                     }
                     <div className="form-group">
                         {chosenPackage &&
                         <div>
-                            The date chosen falls into our <b>{chosenPackage.name}</b> in the <b>{chosenPackage.season}</b> on
+                            The date chosen falls into our <b>{chosenPackage.name}</b> in the <b>{chosenPackage.rateDescription}</b> on
                             a {chosenPackage.dayOfWeek} and starts at <b>£{chosenPackage.price}.00</b>
                             <img className="img-responsive img-circle" src="content/images/ultimate-castle.jpg"/>
                         </div>

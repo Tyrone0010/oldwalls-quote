@@ -14,4 +14,18 @@ interface IChosenPackageAction{
     type: string
 }
 
-export {IChosenPackage, IChosenPackageAction}
+class ChosenPackage implements IChosenPackage {
+    name: null;
+    rateDescription: null;
+    date: null;
+    price: null;
+    blurb: null;
+    imageUrl: null;
+    dayOfWeek: null;
+    season: null;
+
+    constructor(){
+    }
+}
+
+export {IChosenPackage, IChosenPackageAction, ChosenPackage}
